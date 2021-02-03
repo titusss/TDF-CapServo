@@ -94,6 +94,19 @@ def cap_hold():
             if crickit.servo_1.angle < 30: #if the servo's angle is less than 30
                 for p in range (0, 40, 4): #counting by 4s from 0 to 40 ("p" is arbitrary)
                     crickit.servo_1.angle = p #make the servo's angle equal to the # "p"
+                    time.sleep(.05) #sleep a very short time, then repeat this loop until we hit 40
+                print("just finished going to 40") #tell us what you did, servo!
+                anger_count += 1 #keep track of our anger level by adding +1 to "anger_count"
+                print(anger_count) #tell us current anger level so we know how angry we're getting
+            elif crickit.servo_1.angle >= 30: #if the servo's angle is more than 30
+                for p in range (40, 0, -4): #counting backwards by 4s from 40 to 0
+                    crickit.servo_1.angle = p #make the servo's angle = "p" again, this time decreasing
+                    time.sleep(.05) #sleep again for a short bit
+            
+        while not crickit.touch_1.value: #while capacitive touch sensor is being engaged:
+            if crickit.servo_1.angle < 30: #if the servo's angle is less than 30
+                for p in range (0, 40, 4): #counting by 4s from 0 to 40 ("p" is arbitrary)
+                    crickit.servo_1.angle = p #make the servo's angle equal to the # "p"
                     time.sleep(.1) #sleep a very short time, then repeat this loop until we hit 40
                 print("just finished going to 40") #tell us what you did, servo!
                 anger_count += 1 #keep track of our anger level by adding +1 to "anger_count"
@@ -106,14 +119,14 @@ def cap_hold():
                 anger_count += 1 #getting angrier by 1!
                 print(anger_count) #update us on how angry you are
 
-                if anger_count >= 8: #if the anger_count counter gets too big...
-                    while crickit.touch_1.value: #and as long as we're /still/ pressing the sensor...
-                        crickit.servo_1.angle = 110 #get angry and go to 110!
-                        time.sleep(.5) #and try to do it in a half second
-                        print("went to 110 more angrier") #report on your rage
-                        crickit.servo_1.angle = 0 #now return angerly to 0!
-                        time.sleep(.5) #quickly now
-                        print("went to 0 more angrier") #report again on your rage!
+                # if anger_count >= 8: #if the anger_count counter gets too big...
+                #     while crickit.touch_1.value: #and as long as we're /still/ pressing the sensor...
+                #         crickit.servo_1.angle = 110 #get angry and go to 110!
+                #         time.sleep(.5) #and try to do it in a half second
+                #         print("went to 110 more angrier") #report on your rage
+                #         crickit.servo_1.angle = 0 #now return angerly to 0!
+                #         time.sleep(.5) #quickly now
+                #         print("went to 0 more angrier") #report again on your rage!
                 
         else:
             print("nothing touching") #oops, we let go of the sensor
